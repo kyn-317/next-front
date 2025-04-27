@@ -19,7 +19,7 @@ export default function LoginContainer() {
       if (response.ok) {
         const data = await response.json();
         if(data.status === "OK"){
-          localStorage.setItem('jwt', data.data);
+          localStorage.setItem('jwt', data);
           router.push('/'); 
         }else{
           alert('login Failed');
