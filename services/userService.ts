@@ -26,7 +26,7 @@ class ApiError extends Error {
     }
 }
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8070'; // Gateway URL
 
 export const createUser = async (userData: CreateUserRequest): Promise<User> => {
     const response = await fetch(`${API_URL}/user/create`, {

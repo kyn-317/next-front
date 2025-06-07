@@ -55,6 +55,24 @@ export default function HeaderComponent() {
                         <h1 className="text-2xl font-bold text-blue-600">Product Service</h1>
                     </Link>
 
+                    {/* Navigation Links */}
+                    {isLoggedIn && (
+                        <nav className="hidden md:flex space-x-6">
+                            <Link href="/products" className="text-gray-600 hover:text-gray-900">
+                                상품
+                            </Link>
+                            <Link href="/cart" className="text-gray-600 hover:text-gray-900">
+                                장바구니
+                            </Link>
+                            <Link href="/orders" className="text-gray-600 hover:text-gray-900">
+                                주문내역
+                            </Link>
+                            <Link href="/messages" className="text-gray-600 hover:text-gray-900">
+                                메시지
+                            </Link>
+                        </nav>
+                    )}
+
                     {/* Right Section */}
                     <div className="flex items-center space-x-4">
                         {/* User Section */}
