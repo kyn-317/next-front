@@ -21,6 +21,7 @@ export interface CreateOrderRequest {
         productId: string;
         quantity: number;
     }[];
+    totalAmount?: number;
 }
 
 export interface PageResponse<T> {

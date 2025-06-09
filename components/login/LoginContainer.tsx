@@ -8,28 +8,29 @@ export default function LoginContainer() {
 
   const handleLogin = async (id: string, password: string) => {    
     try {
-      const response = await fetch('http://localhost:8080/user/login', {
+      const response = await fetch('http://localhost:8070/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userEmail: id, userPassword:password }),
+        body: JSON.stringify({ email: id, password: password }),
+        credentials: 'include',
       });
 
       if (response.ok) {
-        const data = await response.json();
-        if(data.status === "OK"){
-          localStorage.setItem('jwt', data);
+        const tokenData = await response.json();
+        if(tokenData.accessToken){
+          localStorage.setItem('accessToken', tokenData.accessToken);
           router.push('/'); 
         }else{
-          alert('login Failed');
+          alert('Login Failed: No access token received');
         }
       } else {
-        alert('login Failed');
+        alert('Login Failed');
       }
     } catch (error) {
-      console.error('login Failed:', error);
-      alert('login Failed');
+      console.error('Login Failed:', error);
+      alert('Login Failed');
     }
   };
 

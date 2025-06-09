@@ -1,5 +1,5 @@
 export const getAuthHeader = (): Record<string, string> => {
-  const token = localStorage.getItem('jwt');
+  const token = localStorage.getItem('accessToken');
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -15,7 +15,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   });
 
   if (response.status === 401) {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('accessToken');
     window.location.href = '/login';
     throw new Error('인증이 필요합니다.');
   }

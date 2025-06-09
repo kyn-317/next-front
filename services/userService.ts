@@ -58,17 +58,31 @@ export const login = async (credentials: LoginRequest): Promise<string> => {
         throw new ApiError('Failed to login', response);
     }
 
-    const accessToken = await response.text();
-    localStorage.setItem('accessToken', accessToken);
-    return accessToken;
+    // Backend returns TokenDto object with accessToken and refreshToken
+    const tokenData = await response.json();
+    const accessToken = tokenData.accessToken;
+    
+    if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        return accessToken;
+    } else {
+        throw new ApiError('No access token received', response);
+    }
 };
 
 export const logout = async (): Promise<void> => {
+    const token = localStorage.getItem('accessToken');
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+    };
+    
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(`${API_URL}/user/logout`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers,
         credentials: 'include',
     });
 
@@ -81,10 +95,16 @@ export const logout = async (): Promise<void> => {
 
 export const checkLoginStatus = async (): Promise<User | null> => {
     try {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            return null;
+        }
+
         const response = await fetch(`${API_URL}/user/isLogin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             credentials: 'include',
         });

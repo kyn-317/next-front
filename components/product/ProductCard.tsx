@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     }, []);
 
     return (
-        <Link href={`/product/${product._id}`}>
+        <Link href={`/products/${product._id}`}>
             <div ref={cardRef} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                 {showImage && (
                     <div className="relative w-full" style={{ paddingTop: '75%' }}>

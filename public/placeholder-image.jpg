@@ -1,0 +1,15 @@
+# This is a placeholder. In a real application, you would put an actual image file here.
+# For now, you can use any default product image or create a simple SVG placeholder.
+
+# You can download a placeholder image from:
+# - https://via.placeholder.com/400x300/cccccc/666666?text=Product+Image
+# - Use any free stock photo site
+# - Create a simple SVG file
+
+# Example SVG placeholder (save as .svg instead):
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f3f4f6"/>
+  <text x="50%" y="50%" font-family="Arial" font-size="18" fill="#6b7280" text-anchor="middle" dy=".3em">
+    상품 이미지
+  </text>
+</svg> 

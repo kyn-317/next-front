@@ -11,7 +11,7 @@ const getAuthHeaders = () => {
 };
 
 export const createOrder = async (request: CreateOrderRequest): Promise<Order> => {
-    const response = await fetch(`${API_URL}/order/create`, {
+    const response = await fetch(`${API_URL}/order/byCart`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify(request),
@@ -24,8 +24,9 @@ export const createOrder = async (request: CreateOrderRequest): Promise<Order> =
     return response.json();
 };
 
+// Note: This endpoint is not available in the current backend
 export const getOrders = async (page: number, size: number): Promise<PageResponse<Order>> => {
-    const response = await fetch(`${API_URL}/order?page=${page}&size=${size}`, {
+    const response = await fetch(`${API_URL}/order/purchase-order`, {
         method: 'GET',
         headers: getAuthHeaders(),
     });
@@ -34,7 +35,15 @@ export const getOrders = async (page: number, size: number): Promise<PageRespons
         throw new Error('Failed to fetch orders');
     }
 
-    return response.json();
+    const orders = await response.json();
+    // Transform the response to match the expected PageResponse format
+    return {
+        content: orders,
+        totalElements: orders.length,
+        totalPages: 1,
+        size: size,
+        number: page,
+    };
 };
 
 export const getOrderById = async (orderId: string): Promise<Order> => {
@@ -50,15 +59,8 @@ export const getOrderById = async (orderId: string): Promise<Order> => {
     return response.json();
 };
 
+// Note: This endpoint is not available in the current backend
 export const cancelOrder = async (orderId: string): Promise<Order> => {
-    const response = await fetch(`${API_URL}/order/${orderId}/cancel`, {
-        method: 'PUT',
-        headers: getAuthHeaders(),
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to cancel order');
-    }
-
-    return response.json();
+    // This functionality is not implemented in the current backend
+    throw new Error('Order cancellation is not currently supported');
 }; 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { getProducts } from '../../services/productService';
 import { Product } from '../../types/product';
 
@@ -37,22 +38,30 @@ export default function ProductsPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
-                    <div key={product.id} className="border rounded-lg p-4 shadow-md">
-                        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                        <p className="text-gray-600 mb-2">{product.description}</p>
-                        <p className="text-2xl font-bold text-blue-600 mb-4">
-                            ₩{product.price.toLocaleString()}
+                    <div key={product._id} className="border rounded-lg p-4 shadow-md">
+                        <img
+                            src={product.productImage || '/placeholder-image.jpg'}
+                            alt={product.productName}
+                            className="w-full h-48 object-cover mb-4 rounded"
+                            onError={(e) => {
+                                e.currentTarget.src = '/placeholder-image.jpg';
+                            }}
+                        />
+                        <h3 className="text-xl font-semibold mb-2">{product.productName}</h3>
+                        <p className="text-gray-600 mb-2 line-clamp-2">{product.productDescription}</p>
+                        <p className="text-2xl font-bold text-blue-600 mb-2">
+                            ₩{product.productPrice.toLocaleString()}
                         </p>
                         <p className="text-sm text-gray-500 mb-4">
-                            재고: {product.stock}개
+                            카테고리: {product.productCategory}
                         </p>
                         <div className="flex space-x-2">
-                            <button 
-                                className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                                onClick={() => window.location.href = `/products/${product.id}`}
+                            <Link 
+                                href={`/products/${product._id}`}
+                                className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors text-center"
                             >
                                 상세보기
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
